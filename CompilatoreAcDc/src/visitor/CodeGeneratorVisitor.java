@@ -75,14 +75,16 @@ public class CodeGeneratorVisitor implements IVisitor {
     
     @Override
     public void visit(NodeBinOp node) {
-        node.getLeft().accept(this);
-        if (!log.isEmpty()) return;
-        String leftCode = codiceDc;
-        
-        node.getRight().accept(this);
-        if (!log.isEmpty()) return;
-        
-        codiceDc = leftCode + " " + codiceDc;  // Aggiungo spazio tra operandi
+    	node.getLeft().accept(this);
+    	if (!log.isEmpty()) return;
+    	String leftCode = codiceDc;
+
+    	codiceDc = "";  // Reset o rischio di duplicare il valore
+    	node.getRight().accept(this);
+    	if (!log.isEmpty()) return;
+    	String rightCode = codiceDc;
+
+    	codiceDc = leftCode + " " + rightCode;  
         
         // Aggiunge l'operatore appropriato con spazi
         switch (node.getOp()) {
