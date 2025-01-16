@@ -17,23 +17,7 @@ import visitor.CodeGeneratorVisitor;
 import visitor.TypeCheckingVisitor;
 
 public class testCodeGenerator {
-/*
-	@Test
-	public void test1_assign() throws LexicalException, SyntacticException, IOException {
-	    String path = "CompilatoreAcDc/src/test/data/testCodeGenerator/1_assign.txt";
-	    Scanner scanner = new Scanner(path);
-	    Parser parser = new Parser(scanner);
-	    NodeProgram nP = parser.parse();
-	    var tcVisit = new TypeCheckingVisitor();
-        nP.accept(tcVisit);
-        var cgVisit = new CodeGeneratorVisitor();
-        nP.accept(cgVisit);
-        
-        assertEquals(cgVisit.getLog(), "");
 
-	}
-	*/
-	
 	@Test
 	public void test1_assign() throws LexicalException, SyntacticException, IOException {
 
@@ -41,19 +25,15 @@ public class testCodeGenerator {
         Scanner scanner = new Scanner(path);
         Parser parser = new Parser(scanner);
         NodeProgram nP = parser.parse();
-        
-        // Prima il type checking
+       
         var tcVisit = new TypeCheckingVisitor();
         nP.accept(tcVisit);
         assertEquals(TypeDescriptor.TipoTD.OK, tcVisit.getResType().getTipo());
         
-        // Poi la generazione del codice
         var cgVisit = new CodeGeneratorVisitor();
         nP.accept(cgVisit);
-        
-        // Verifica che non ci siano errori
+
         assertEquals("", cgVisit.getLog());
-        // Verifica il codice generato
         assertEquals("1 6 / sa la p P", cgVisit.getCodiceDc());
 
 	}
@@ -83,7 +63,6 @@ public class testCodeGenerator {
 	        //print b; lb p P
 	        //print temp; lc p P
 	        assertEquals("0 sa la 1 + sa 6 sb 1.0 6 5k / 0k la lb / + sc la p P lb p P lc p P", cgVisit.getCodiceDc());
-	        //assertEquals("0 sa la 1 + sa 6 sb 5k 1.0 6 / la lb / + 0k sc la p P lb p P lc p P", cgVisit.getCodiceDc());
 	    }
 	 
 	   @Test

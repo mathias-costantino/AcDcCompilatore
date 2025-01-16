@@ -4,14 +4,13 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PushbackReader;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import scanner.LexicalException;
-import parser.*;
+
+
 
 
 
@@ -123,109 +122,6 @@ public class Scanner {
 	    readChar(); // Consuma il carattere illegale
 	    throw new LexicalException("Carattere illegale alla riga " + riga + ": " + currentChar);
 	}
-	
-	/*
-	public Token nextToken() throws IOException, LexicalException {
-	    // Avanza nel buffer leggendo i carattere in skipChars
-	    // incrementando riga se leggi '\n'.
-	    // Se raggiungi la fine del file ritorna il Token EOF
-	    while (skpChars.contains(peekChar())) {
-	        if (peekChar() == '\n') {
-	            riga++;
-	        }
-	        if (peekChar() == EOF) {
-	            readChar(); // Consuma EOF
-	            nextTk = new Token(TokenType.EOF, riga);
-	            return nextTk;
-	        }
-	        readChar(); // Consuma il carattere
-	    }
-
-	    // Continua con la lettura del token fino alla fine della riga
-	    char currentChar = peekChar();
-	    
-
-	    System.out.println("Inizio lettura token, carattere iniziale: " + currentChar);
-	    
-	    while(peekChar() != '\n' && peekChar() != EOF) {
-	    	 //currentChar = peekChar(); 
-	    	  //gestione numeri
-		    if(digits.contains(currentChar) || currentChar == '.') {
-		    	System.out.println("Trovato numero o punto: " + currentChar);
-		    	return scanNumber();
-		    }
-		    
-		    //gestione identificatori e parole chiavi
-		    if(letters.contains(currentChar)) {
-		    	 System.out.println("Trovato identificatore o parola chiave: " + currentChar);
-		    	return scanId();
-		    }
-		    
-		    //gestione operatori e delimitatori
-		    if(operTkType.containsKey(peekChar()) || delimTkType.containsKey(peekChar())) {
-		    	System.out.println("Trovato operatore o delimitatore: " + currentChar);
-		    	return scanOperator();
-		    }
-	
-	    	readChar();
-	    	
-	    }
-	    
-	    System.out.println("Carattere illegale trovato: " + currentChar); 
-	    throw new LexicalException("Carattere illegale alla riga " + riga + ": " + currentChar);
-        
-	}*/
-
-
-	/*
-	public Token nextToken() throws IOException, LexicalException {
-	    try {
-	        while(true) {
-	            char nextChar = peekChar(); 
-	            System.out.println("Carattere letto: " + nextChar);  // Stampa il carattere che sta causando l'errore
-	            
-	            if(nextChar == '\n') {
-	                riga++;
-	                readChar(); // Consuma il carattere '\n'
-	                continue;
-	            }
-	            
-	            if(skpChars.contains(nextChar)) {
-	                readChar(); // Consuma il carattere
-	                continue;
-	            }
-
-	            if(nextChar == EOF) {  
-	            	readChar();
-	            	Token nextTk = new Token(TokenType.EOF, riga, "EOF");
-	            	return nextTk;
-	            }
-
-	            if(letters.contains(nextChar)) {
-	                return scanId(nextChar);
-	            }
-
-	            if (operTkType.containsKey(nextChar) || delimTkType.containsKey(nextChar)) {
-	                return scanOperator(nextChar); 
-	            }
-
-	            if(digits.contains(nextChar)) {
-	                return scanNumber(nextChar);
-	            }
-
-	            // Aggiungi la stampa per capire quale carattere è non valido
-	            System.out.println("Carattere non valido trovato: " + nextChar);
-	            
-	            // Consuma il carattere non valido
-	            readChar(); 
-
-	            // Lancia l'eccezione per carattere non valido
-	            throw new LexicalException("Errore: carattere non valido");
-	        }
-	    } catch (IOException e) {
-	        throw new LexicalException("\nErrore di I/O\n\n");
-	    }
-	}*/
 
 	   private Token scanId() throws IOException {
 	        StringBuilder sb = new StringBuilder();
@@ -243,111 +139,6 @@ public class Scanner {
 	        
 	        return new Token(TokenType.ID, riga, id);
 	    }
-	
-	/*
-	public Token scanId() throws IOException {
-	    StringBuilder sb = new StringBuilder();
-	    
-	    // Inizia con il carattere già letto (peekChar)
-	    char currentChar = peekChar();
-	    System.out.println("Inizio con il carattere: " + currentChar);
-	    sb.append(currentChar);
-
-	    // Continua a leggere finché il carattere è una lettera o una cifra
-	    while (Character.isLetterOrDigit(peekChar())) {
-	        currentChar = peekChar();
-	        System.out.println("Carattere corrente: " + currentChar);
-	        
-	        sb.append(readChar());
-	        System.out.println("Carattere aggiunto all'identificatore: " + currentChar);
-	    }
-
-	    String idString = sb.toString();
-	    System.out.println("Identificatore completo: " + idString);
-
-	    // Controlla se la stringa corrisponde a una parola chiave
-	    if (keyWordsTkType.containsKey(idString)) {
-	        System.out.println("Parola chiave trovata: " + idString);
-	        return new Token(keyWordsTkType.get(idString), riga, idString);
-	    }
-
-	    // Altrimenti, restituisci un identificatore generico
-	    System.out.println("Restituito identificatore generico: " + idString);
-	    return new Token(TokenType.ID, riga, idString);
-	}*/
-
-
-
-	/*
-	public Token scanId() throws IOException {
-	    StringBuilder id = new StringBuilder();
-	    
-	    // Non chiamare readChar() all'inizio, ma usa il carattere già letto
-	  
-	    
-	    System.out.println("Inizializzo scanId con nextChar: " + nextChar);
-	    id.append(nextChar);
-	    
-	  
-	
-	    
-	    nextChar = readChar();
-	    System.out.println("Dopo readChar, nextChar: " + nextChar);
-	    
-	    // Continua a leggere finché il carattere è una lettera o una cifra
-	    while (Character.isLetterOrDigit(nextChar)) {
-	        id.append(nextChar);
-	        nextChar = readChar();
-	        System.out.println("Dentro il ciclo, nextChar: " + nextChar);
-	    }
-
-	    // Effettua un "pushback" dell'ultimo carattere letto
-	    buffer.unread(nextChar);
-
-	    String idString = id.toString();
-	    System.out.println("idString: " + idString);
-
-	    // Controlla se la stringa corrisponde a una parola chiave
-	    if (keyWordsTkType.containsKey(idString)) {
-	        return new Token(keyWordsTkType.get(idString), riga, idString);
-	    }
-
-	    // Altrimenti, restituisci un identificatore generico
-	    return new Token(TokenType.ID, riga, idString);
-	}*/
-
-
-	/*
-	// private Token scanId()
-	private Token scanId(char nextChar) throws IOException {
-	    StringBuilder id = new StringBuilder();
-	    
-	    nextChar = readChar();
-	   
-	    
-
-	    // Continua a leggere finché il carattere è una lettera o una cifra
-	    while (Character.isLetterOrDigit(nextChar)) {
-	        id.append(nextChar);
-	        nextChar = readChar();
-	    }
-
-	    // Effettua un "pushback" dell'ultimo carattere letto
-	    buffer.unread(nextChar);
-
-	    String idString = id.toString();
-
-	    // Controlla se la stringa corrisponde a una parola chiave
-	    if (keyWordsTkType.containsKey(idString)) {
-	        return new Token(keyWordsTkType.get(idString), riga, idString);
-	    }
-
-	    // Altrimenti, restituisci un identificatore generico
-	    return new Token(TokenType.ID, riga, idString);
-	}*/
-
-
-
 	
 	// private Token scanOperator()
 	   private Token scanOperator() throws IOException, LexicalException {
@@ -379,12 +170,10 @@ public class Scanner {
 		    boolean hasDecimalPoint = false;
 		    int decimalCount = 0;
 
-		    // Gestione parte intera
 		    while (digits.contains(peekChar())) {
 		        sb.append(readChar());
 		    }
 
-		    // Gestione decimali
 		    if (peekChar() == '.') {
 		        if (hasDecimalPoint) {
 		            throw new LexicalException("Numero non valido: troppi punti decimali alla riga " + riga);
@@ -393,7 +182,6 @@ public class Scanner {
 		        isFloat = true;
 		        sb.append(readChar());
 
-		        // Conta i caratteri dopo il punto
 		        while (digits.contains(peekChar())) {
 		            sb.append(readChar());
 		            decimalCount++;
@@ -402,13 +190,11 @@ public class Scanner {
 		            }
 		        }
 
-		        // Controlla se ci sono numeri dopo il punto
 		        if (decimalCount == 0) {
 		            throw new LexicalException("Numero decimale non valido alla riga " + riga);
 		        }
 		    }
 
-		    // Controllo per ulteriori punti decimali
 		    if (peekChar() == '.') {
 		        throw new LexicalException("Numero decimale non valido alla riga " + riga);
 		    }
@@ -416,62 +202,6 @@ public class Scanner {
 		    String number = sb.toString();
 		    return new Token(isFloat ? TokenType.FLOAT : TokenType.INT, riga, number);
 		}
-
-	   
-	  /*
-	   private Token scanNumber() throws IOException, LexicalException {
-		    StringBuilder sb = new StringBuilder();
-		    boolean isFloat = false;
-		    int decimalCount = 0;
-
-		    // Gestione parte intera
-		    while (digits.contains(peekChar())) {
-		        sb.append(readChar());
-		    }
-
-		    // Gestione decimali
-		    if (peekChar() == '.') {
-		    	
-		        isFloat = true;
-		        sb.append(readChar());
-		        
-		        // Conta tutti i decimali disponibili per verificare se sono troppi
-		        while (digits.contains(peekChar())) {
-		            if (decimalCount >= 5) {
-		                // Se abbiamo già 5 decimali e ce ne sono altri, è un errore
-		                throw new LexicalException("Numero decimale non valido alla riga " + riga);
-		            }
-		            else if (peekChar() == '.') {
-		            	throw new LexicalException("Numero non valido: troppi punti decimali alla riga " + riga);
-		            }
-		            sb.append(readChar());
-		            decimalCount++;
-		        }
-
-		        if (decimalCount == 0) {
-		            throw new LexicalException("Numero decimale non valido alla riga " + riga);
-		        }
-		    }
-		    
-		
-		    String number = sb.toString();
-		    return new Token(isFloat ? TokenType.TYFLOAT : TokenType.TYINT, riga, number);
-		}
-	   */
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
 
 	private char readChar() throws IOException {
 		return ((char) this.buffer.read());

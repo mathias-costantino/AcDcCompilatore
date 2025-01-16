@@ -70,34 +70,7 @@ public class Parser {
                 throw new SyntacticException("Token non valido in DSs: " + tk.getTipo());
         }
     }
-/*
-    private NodeDecl parseDcl() throws LexicalException, SyntacticException, IOException {
-        Token tk;
-        try {
-            tk = scanner.peekToken();
-        } catch (Exception e) {
-            throw new SyntacticException(errorMessage, e);
-        }
 
-        switch(tk.getTipo()) {
-            case TYINT:
-            	  match(tk.getTipo());
-                  Token idToken = match(TokenType.ID);
-                  NodeId id = new NodeId(idToken.getVal());
-                  NodeExpr init = parseDclP();
-                  return new NodeDecl(id, LangType.INT, init);
-            case TYFLOAT:
-            	   match(tk.getTipo());
-                   Token idToken2 = match(TokenType.ID);
-                   NodeId id2 = new NodeId(idToken2.getVal());
-                   NodeExpr init2 = parseDclP();
-                   return new NodeDecl(id2, LangType.FLOAT, init2);
-            default:
-                throw new SyntacticException("Tipo non valido nella dichiarazione");
-        }
-    }*/
-    
-    
     private NodeDecl parseDcl() throws LexicalException, SyntacticException, IOException {
         Token tk;
         try {
@@ -141,16 +114,6 @@ public class Parser {
                 match(TokenType.SEMI);
                 return null;
             case ASSIGN:
-            	/*
-            	 * *match(tk.getTipo());  // consuma il token TYFLOAT
-                Token idToken2 = scanner.peekToken();  // guarda il token ID ma non consumarlo ancora
-                NodeId id2 = new NodeId(idToken2.getVal());  // crea NodeId con il valore dell'ID
-                match(TokenType.ID);  // ora consuma il token ID
-                NodeExpr init2 = parseDclP();
-                return new NodeDecl(id2, LangType.FLOAT, init2);
-                
-
-            	 */
                 match(TokenType.ASSIGN);
                 NodeExpr expr = parseExp();
                 match(TokenType.SEMI);
@@ -160,7 +123,6 @@ public class Parser {
         }
     }
 
-    /*
     private NodeStm parseStm() throws LexicalException, SyntacticException, IOException {
         Token tk;
         try {
@@ -171,51 +133,8 @@ public class Parser {
 
         switch(tk.getTipo()) {
             case ID:
-            	match(tk.getTipo());
-            	Token idToken = scanner.peekToken();
-            	NodeId id = new NodeId(idToken.getVal());
-            	
-
-                LangOper op = parseOp();
-                NodeExpr expr = parseExp();
-                match(TokenType.SEMI);
-                
-                if (op != null) {
-                    // Per operatori composti (+=, -=, etc.)
-                    NodeExpr left = new NodeDeref(id);
-                    NodeBinOp binOp = new NodeBinOp(op, left, expr);
-                    return new NodeAssign(id, binOp);
-                } else {
-                    // Per assegnamento semplice (=)
-                    return new NodeAssign(id, expr);
-                }
-            case PRINT:
-            	 match(tk.getTipo());
-                 Token idToken2 = scanner.peekToken();
-                 NodeId id2 = new NodeId(idToken2.getVal());
-                 match(TokenType.ID);
-                 match(TokenType.SEMI);
-                 return new NodePrint(new NodeId(idToken2.getVal()));
-            default:
-                throw new SyntacticException("Statement non valido");
-        }
-    }*/
-    
-    private NodeStm parseStm() throws LexicalException, SyntacticException, IOException {
-        Token tk;
-        try {
-            tk = scanner.peekToken();
-        } catch (Exception e) {
-            throw new SyntacticException(errorMessage, e);
-        }
-
-        switch(tk.getTipo()) {
-            case ID:
-                // Prima ottieni il token ID senza consumarlo
                 Token idToken = scanner.peekToken();
-                // Poi fai il match per consumarlo
                 match(TokenType.ID);
-                // Crea il NodeId con il valore corretto
                 NodeId id = new NodeId(idToken.getVal());
 
                 LangOper op = parseOp();
@@ -282,10 +201,7 @@ public class Parser {
             throw new SyntacticException(errorMessage, e);
         }
     	
-        //NodeExpr term = parseTr();
-        //return parseExpP(term);
         switch (tk.getTipo()) {
-		// Exp -> Tr ExpP
 		case ID, FLOAT, INT -> {
 			NodeExpr tr = parseTr();
 			NodeExpr expP = parseExpP(tr);
@@ -307,14 +223,6 @@ public class Parser {
 
         switch(tk.getTipo()) {
             case PLUS:
-            	/*
-            	 * * match(tk.getTipo());  // consuma il token TYINT
-                Token idToken = scanner.peekToken();  // guarda il token ID ma non consumarlo ancora
-                NodeId id = new NodeId(idToken.getVal());  // crea NodeId con il valore dell'ID
-                match(TokenType.ID);  // ora consuma il token ID
-                NodeExpr init = parseDclP();
-                return new NodeDecl(id, LangType.INT, init);
-            	 */
                 match(TokenType.PLUS);
                 NodeExpr term = parseTr();
                 return parseExpP(new NodeBinOp(LangOper.PLUS, left, term));
@@ -400,7 +308,6 @@ public class Parser {
         }
         if (type.equals(tk.getTipo())) {
         	   try {
-                   //return scanner.nextToken();
         		   Token consumedToken = scanner.nextToken();
                    return consumedToken;  
                } catch (Exception e) {

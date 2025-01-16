@@ -1,13 +1,10 @@
 package test;
 
-import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.Scanner;
 
 import parser.Parser;
 import parser.SyntacticException;

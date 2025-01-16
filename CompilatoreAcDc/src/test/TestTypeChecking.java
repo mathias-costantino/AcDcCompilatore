@@ -1,13 +1,9 @@
 package test;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.junit.Test;
 
@@ -17,7 +13,6 @@ import parser.Parser;
 import parser.SyntacticException;
 import scanner.LexicalException;
 import scanner.Scanner;
-import symbolTable.SymbolTable;
 import visitor.*;
 
 public class TestTypeChecking {

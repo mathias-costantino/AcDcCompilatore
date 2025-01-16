@@ -1,7 +1,6 @@
 package test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -10,7 +9,6 @@ import java.io.IOException;
 
 import org.junit.Test;
 
-import junit.framework.Assert;
 import scanner.LexicalException;
 import scanner.Scanner;
 import token.Token;
