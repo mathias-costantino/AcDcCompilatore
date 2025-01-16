@@ -82,7 +82,8 @@ public class testCodeGenerator {
 	        //print a; la p P
 	        //print b; lb p P
 	        //print temp; lc p P
-	        assertEquals("0 sa la 1 + sa 6 sb 1.0 6 / la lb / + sc la p P lb p P lc p P", cgVisit.getCodiceDc());
+	        assertEquals("0 sa la 1 + sa 6 sb 1.0 6 5k / 0k la lb / + sc la p P lb p P lc p P", cgVisit.getCodiceDc());
+	        //assertEquals("0 sa la 1 + sa 6 sb 5k 1.0 6 / la lb / + 0k sc la p P lb p P lc p P", cgVisit.getCodiceDc());
 	    }
 	 
 	   @Test
@@ -113,7 +114,7 @@ public class testCodeGenerator {
 	        //flo *= f; lc lb * sc
 	        //print flo; lc p P
 
-	        assertEquals("5 3 + sa la 0.5 + sb la p P lb 4 / sb lb p P lb 1 - sc lc lb * sc lc p P", cgVisit.getCodiceDc());
+	        assertEquals("5 3 + sa la 0.5 + sb la p P lb 4 5k / 0k sb lb p P lb 1 - sc lc lb * sc lc p P", cgVisit.getCodiceDc());
 	    }
 	   
 	   @Test
