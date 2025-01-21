@@ -16,6 +16,9 @@ import java.util.Map;
 
 import token.*;
 
+/**
+ * @author Mathias Costantino, 20043922
+ */
 public class Scanner {
 	private static final char EOF = (char) -1;
 	private int riga = 1;

@@ -12,6 +12,9 @@ import scanner.LexicalException;
 
 import org.junit.Test;
 
+/**
+ * @author Mathias Costantino, 20043922
+ */
 public class TestParser {
 
 	@Test

@@ -2,6 +2,9 @@ package visitor;
 
 import ast.*;
 
+/**
+ * @author Mathias Costantino, 20043922
+ */
 public interface IVisitor {
     void visit(NodeProgram node);
     void visit(NodeId node);

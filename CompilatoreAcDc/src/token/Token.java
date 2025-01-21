@@ -1,5 +1,8 @@
 package token;
 
+/**
+ * @author Mathias Costantino, 20043922
+ */
 public class Token {
 
 	private int riga;

@@ -7,6 +7,9 @@ import ast.*;
 import token.*;
 import scanner.*;
 
+/**
+ * @author Mathias Costantino, 20043922
+ */
 public class Parser {
     private Scanner scanner;
     private String errorMessage = "Errore durante la scansione";

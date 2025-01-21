@@ -2,6 +2,9 @@ package symbolTable;
 
 import java.util.HashMap;
 
+/**
+ * @author Mathias Costantino, 20043922
+ */
 public class SymbolTable {
     private static HashMap<String, Attributes> table;
 

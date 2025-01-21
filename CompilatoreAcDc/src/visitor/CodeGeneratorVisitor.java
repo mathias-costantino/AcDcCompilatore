@@ -4,6 +4,9 @@ import ast.*;
 import symbolTable.SymbolTable;
 import symbolTable.Attributes;
 
+/**
+ * @author Mathias Costantino, 20043922
+ */
 public class CodeGeneratorVisitor implements IVisitor {
     private String codiceDc;      
     private String log;           
@@ -24,6 +27,10 @@ public class CodeGeneratorVisitor implements IVisitor {
         return log;
     }
     
+    /**
+     * Alloca un nuovo registro.
+     * @return Il carattere che identifica il nuovo registro, o '\0' se non ci sono più registri disponibili
+     */
     private char newRegister() {
         if (nextRegisterIndex >= REGISTERS.length()) {
             log = "Errore: registri esauriti";
@@ -32,6 +39,10 @@ public class CodeGeneratorVisitor implements IVisitor {
         return REGISTERS.charAt(nextRegisterIndex++);
     }
     
+    /**
+     * Visita il nodo radice del programma.
+     * Si ferma al primo errore incontrato.
+     */
     @Override
     public void visit(NodeProgram node) {
         for (NodeDecSt decSt : node.getDecSts()) {
@@ -40,6 +51,10 @@ public class CodeGeneratorVisitor implements IVisitor {
         }
     }
     
+    /**
+     * Visita un nodo di dichiarazione.
+     * Alloca un nuovo registro.
+     */
     @Override
     public void visit(NodeDecl node) {
         // Genera un nuovo registro
@@ -58,6 +73,10 @@ public class CodeGeneratorVisitor implements IVisitor {
         }
     }
     
+    /**
+     * Visita un nodo di assegnamento.
+     * Genera il codice per l'espressione.
+     */
     @Override
     public void visit(NodeAssign node) {
         node.getExpr().accept(this);
@@ -69,6 +88,9 @@ public class CodeGeneratorVisitor implements IVisitor {
         }
     }
     
+    /**
+     * Gestisce in modo speciale le operazioni con float, impostando la precisione appropriata.
+     */
     @Override
     public void visit(NodeBinOp node) {
         node.getLeft().accept(this);
@@ -117,11 +139,14 @@ public class CodeGeneratorVisitor implements IVisitor {
                 }
                 break;
             case DIV_FLOAT:
-                codiceDc += " 5k / 0k";  // Set precision to 5, divide, reset to 0
-                break;
+                codiceDc += " 5k / 0k";  // Imposta precisione a 5, divide, resetta a 0
         }
     }
     
+    /**
+     * Visita un nodo di print.
+     * Genera il codice per stampare il valore di una variabile.
+     */
     @Override
     public void visit(NodePrint node) {
         node.getId().accept(this);
@@ -129,11 +154,17 @@ public class CodeGeneratorVisitor implements IVisitor {
         codiceDc += " p P";
     }
     
+    /**
+     * Genera il codice per accedere al valore di una variabile.
+     */
     @Override
     public void visit(NodeDeref node) {
         node.getId().accept(this);
     }
     
+    /**
+     * Genera il codice per caricare il valore dal registro associato all'identificatore.
+     */
     @Override
     public void visit(NodeId node) {
         Attributes attr = SymbolTable.lookup(node.getName());
@@ -145,6 +176,9 @@ public class CodeGeneratorVisitor implements IVisitor {
         }
     }
     
+    /**
+     * Genera il codice per una costante numerica.
+     */
     @Override
     public void visit(NodeCost node) {
         if (!codiceDc.isEmpty() && !codiceDc.endsWith(" ")) {

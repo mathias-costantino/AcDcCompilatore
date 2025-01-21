@@ -14,6 +14,9 @@ import scanner.Scanner;
 import token.Token;
 import token.TokenType;
 
+/**
+ * @author Mathias Costantino, 20043922
+ */
 public class TestScanner {
 	
 	@Test

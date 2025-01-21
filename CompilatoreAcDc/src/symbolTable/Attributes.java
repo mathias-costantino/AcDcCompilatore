@@ -2,6 +2,9 @@ package symbolTable;
 
 import ast.LangType;
 
+/**
+ * @author Mathias Costantino, 20043922
+ */
 public class Attributes {
 
 	private LangType tipo;

@@ -4,6 +4,9 @@ import ast.*;
 import symbolTable.SymbolTable;
 import symbolTable.Attributes;
 
+/**
+ * @author Mathias Costantino, 20043922
+ */
 public class TypeCheckingVisitor implements IVisitor {
     private TypeDescriptor resType;
     
@@ -15,6 +18,13 @@ public class TypeCheckingVisitor implements IVisitor {
         return resType;
     }
 
+    /**
+     * Visita il nodo radice del programma.
+     * Attraversa tutti i nodi di dichiarazione e statement.
+     * Se trova un errore di tipo, interrompe la visita.
+     * 
+     * @param node Nodo programma da visitare
+     */
     @Override
     public void visit(NodeProgram node) {
         for (NodeDecSt decSt : node.getDecSts()) {
@@ -26,6 +36,13 @@ public class TypeCheckingVisitor implements IVisitor {
         resType = new TypeDescriptor(TypeDescriptor.TipoTD.OK);
     }
 
+    /**
+     * Visita un nodo identificatore.
+     * Verifica che l'identificatore sia stato dichiarato nella symbol table.
+     * Imposta il tipo risultante in base al tipo della variabile.
+     * 
+     * @param node Nodo identificatore da visitare
+     */
     @Override
     public void visit(NodeId node) { 
         Attributes attr = SymbolTable.lookup(node.getName());
@@ -37,11 +54,17 @@ public class TypeCheckingVisitor implements IVisitor {
         resType = new TypeDescriptor(attr.getTipo() == LangType.INT ? 
             TypeDescriptor.TipoTD.INT : TypeDescriptor.TipoTD.FLOAT);
     }
-
+    
+    /**
+     * Verifica la compatibilità dei tipi se è presente un'inizializzazione.
+     * Inserisce la variabile nella symbol table se non è già presente.
+     * 
+     * @param node Nodo dichiarazione da visitare
+     */
     @Override
     public void visit(NodeDecl node) {
         String varName = node.getId().getName();
-        System.out.println("Visita dichiarazione di variabile: " + varName + ", tipo: " + node.getType());
+        //System.out.println("Visita dichiarazione di variabile: " + varName + ", tipo: " + node.getType());
 
         if (node.getInit() != null) {
             node.getInit().accept(this);
@@ -62,9 +85,8 @@ public class TypeCheckingVisitor implements IVisitor {
             }
         }
 
-        System.out.println("Tentativo di inserire variabile: " + varName);
+        //System.out.println("Tentativo di inserire variabile: " + varName);
         
-        // Modifica qui: aggiungi il punto alla fine del messaggio di errore
         if (!SymbolTable.enter(varName, new Attributes(node.getType()))) {
             resType = new TypeDescriptor(TypeDescriptor.TipoTD.ERROR,
                 "Errore: Variabile " + varName + " già dichiarata.", 0);  
@@ -74,7 +96,13 @@ public class TypeCheckingVisitor implements IVisitor {
         resType = new TypeDescriptor(TypeDescriptor.TipoTD.OK);
     }
 
-    
+
+    /**
+     * Verifica la compatibilità dei tipi degli operandi.
+     * Gestisce la divisione con float.
+     * 
+     * @param node Nodo operazione binaria da visitare
+     */
     @Override
     public void visit(NodeBinOp node) {
         node.getLeft().accept(this);
@@ -103,6 +131,11 @@ public class TypeCheckingVisitor implements IVisitor {
             TypeDescriptor.TipoTD.FLOAT : TypeDescriptor.TipoTD.INT);
     }
 
+    /**
+     * Verifica la compatibilità tra il tipo della variabile e dell'espressione.
+     * 
+     * @param node Nodo assegnamento da visitare
+     */
     @Override
     public void visit(NodeAssign node) {
         node.getId().accept(this);
@@ -128,6 +161,11 @@ public class TypeCheckingVisitor implements IVisitor {
         resType = new TypeDescriptor(TypeDescriptor.TipoTD.OK);
     }
 
+    /**
+     * Verifica che l'identificatore da stampare sia stato dichiarato.
+     * 
+     * @param node Nodo print da visitare
+     */
     @Override
     public void visit(NodePrint node) {
         node.getId().accept(this);
@@ -137,11 +175,21 @@ public class TypeCheckingVisitor implements IVisitor {
         resType = new TypeDescriptor(TypeDescriptor.TipoTD.OK);
     }
 
+    /**
+     * Verifica il tipo dell'identificatore dereferenziato.
+     * 
+     * @param node Nodo deref da visitare
+     */
     @Override
     public void visit(NodeDeref node) {
         node.getId().accept(this);
     }
 
+    /**
+     * Imposta il tipo risultante in base al tipo della costante.
+     * 
+     * @param node Nodo costante da visitare
+     */
     @Override
     public void visit(NodeCost node) {
         resType = new TypeDescriptor(

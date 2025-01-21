@@ -1,5 +1,8 @@
 package ast;
 
+/**
+ * @author Mathias Costantino, 20043922
+ */
 public class TypeDescriptor {
 	
 	public enum TipoTD {

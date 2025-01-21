@@ -7,6 +7,9 @@ import org.junit.Test;
 import token.Token;
 import token.TokenType;
 
+/**
+ * @author Mathias Costantino, 20043922
+ */
 public class TestToken {
 
 	@Test

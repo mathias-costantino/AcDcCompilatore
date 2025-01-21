@@ -16,6 +16,9 @@ import scanner.Scanner;
 import visitor.CodeGeneratorVisitor;
 import visitor.TypeCheckingVisitor;
 
+/**
+ * @author Mathias Costantino, 20043922
+ */
 public class testCodeGenerator {
 
 	@Test

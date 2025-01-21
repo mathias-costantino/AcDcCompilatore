@@ -15,6 +15,9 @@ import scanner.LexicalException;
 import scanner.Scanner;
 import visitor.*;
 
+/**
+ * @author Mathias Costantino, 20043922
+ */
 public class TestTypeChecking {
 	
 	@Test
