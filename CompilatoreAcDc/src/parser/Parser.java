@@ -27,7 +27,7 @@ public class Parser {
         try {
             tk = scanner.peekToken();
         } catch (Exception e) {
-            throw new SyntacticException(errorMessage, e);
+            throw new SyntacticException(errorMessage);
         }
         
         switch(tk.getTipo()) {
@@ -51,7 +51,7 @@ public class Parser {
         try {
             tk = scanner.peekToken();
         } catch (Exception e) {
-            throw new SyntacticException(errorMessage, e);
+            throw new SyntacticException(errorMessage);
         }
 
         switch(tk.getTipo()) {
@@ -79,7 +79,7 @@ public class Parser {
         try {
             tk = scanner.peekToken();
         } catch (Exception e) {
-            throw new SyntacticException(errorMessage, e);
+            throw new SyntacticException(errorMessage);
         }
 
         switch(tk.getTipo()) {
@@ -109,7 +109,7 @@ public class Parser {
         try {
             tk = scanner.peekToken();
         } catch (Exception e) {
-            throw new SyntacticException(errorMessage, e);
+            throw new SyntacticException(errorMessage);
         }
 
         switch(tk.getTipo()) {
@@ -131,7 +131,7 @@ public class Parser {
         try {
             tk = scanner.peekToken();
         } catch (Exception e) {
-            throw new SyntacticException(errorMessage, e);
+            throw new SyntacticException(errorMessage);
         }
 
         switch(tk.getTipo()) {
@@ -169,7 +169,7 @@ public class Parser {
         try {
             tk = scanner.peekToken();
         } catch (Exception e) {
-            throw new SyntacticException(errorMessage, e);
+            throw new SyntacticException(errorMessage);
         }
 
         switch(tk.getTipo()) {
@@ -201,7 +201,7 @@ public class Parser {
         try {
             tk = scanner.peekToken();
         } catch (Exception e) {
-            throw new SyntacticException(errorMessage, e);
+            throw new SyntacticException(errorMessage);
         }
     	
         switch (tk.getTipo()) {
@@ -221,7 +221,7 @@ public class Parser {
         try {
             tk = scanner.peekToken();
         } catch (Exception e) {
-            throw new SyntacticException(errorMessage, e);
+            throw new SyntacticException(errorMessage);
         }
 
         switch(tk.getTipo()) {
@@ -245,7 +245,7 @@ public class Parser {
         try {
             tk = scanner.peekToken();
         } catch (Exception e) {
-            throw new SyntacticException(errorMessage, e);
+            throw new SyntacticException(errorMessage);
         }
         
         NodeExpr val = parseVal();
@@ -257,7 +257,7 @@ public class Parser {
         try {
             tk = scanner.peekToken();
         } catch (Exception e) {
-            throw new SyntacticException(errorMessage, e);
+            throw new SyntacticException(errorMessage);
         }
 
         switch(tk.getTipo()) {
@@ -283,7 +283,7 @@ public class Parser {
         try {
             tk = scanner.peekToken();
         } catch (Exception e) {
-            throw new SyntacticException(errorMessage, e);
+            throw new SyntacticException(errorMessage);
         }
 
         switch(tk.getTipo()) {
@@ -307,14 +307,14 @@ public class Parser {
             tk = scanner.peekToken();
             System.out.println("Token atteso: " + type + " , Token trovato: " + tk.getTipo());
         } catch (Exception e) {
-            throw new SyntacticException(errorMessage, e);
+            throw new SyntacticException(errorMessage);
         }
         if (type.equals(tk.getTipo())) {
         	   try {
         		   Token consumedToken = scanner.nextToken();
                    return consumedToken;  
                } catch (Exception e) {
-                   throw new SyntacticException(errorMessage, e);
+                   throw new SyntacticException(errorMessage);
                }
         } else {
             throw new SyntacticException("Token atteso " + type + " ma trovato " + tk.getTipo() + 
