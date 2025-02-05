@@ -101,7 +101,7 @@ public class Scanner {
 	    }
 
 	    char currentChar = peekChar();
-	    System.out.println("Inizio lettura token, carattere iniziale: " + currentChar);
+	    //System.out.println("Inizio lettura token, carattere iniziale: " + currentChar);
 	    
 	    // Gestione numeri
 	    if(digits.contains(currentChar) || currentChar == '.') {

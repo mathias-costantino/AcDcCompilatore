@@ -266,6 +266,14 @@ public class TestScanner {
 		String path = "CompilatoreAcDc/src/test/data/testScanner/testId.txt";
 	    Scanner scanner = new Scanner(path);
 	    
+	    /*
+	    Token tk = scanner.peekToken();
+	    System.out.print(tk);
+	    Token tk2 = scanner.nextToken();
+	    System.out.print(tk2);
+	    */
+	    
+	    
 	    assertDoesNotThrow(() -> {
 	    	Token token = scanner.nextToken();
 	    	assertEquals(TokenType.ID, token.getTipo());
